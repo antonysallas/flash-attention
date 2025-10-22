@@ -64,6 +64,8 @@ SKIP_CUDA_BUILD = os.getenv("FLASH_ATTENTION_SKIP_CUDA_BUILD", "FALSE") == "TRUE
 FORCE_CXX11_ABI = os.getenv("FLASH_ATTENTION_FORCE_CXX11_ABI", "FALSE") == "TRUE"
 USE_TRITON_ROCM = os.getenv("FLASH_ATTENTION_TRITON_AMD_ENABLE", "FALSE") == "TRUE"
 SKIP_CK_BUILD = os.getenv("FLASH_ATTENTION_SKIP_CK_BUILD", "TRUE") == "TRUE" if USE_TRITON_ROCM else False
+# Allow using external CUTLASS directory (similar to VLLM_CUTLASS_SRC_DIR)
+CUTLASS_SRC_DIR = os.getenv("FLASH_ATTN_CUTLASS_SRC_DIR", None)
 
 @functools.lru_cache(maxsize=None)
 def cuda_archs() -> str:
@@ -364,7 +366,7 @@ if not SKIP_CUDA_BUILD and not IS_ROCM:
             include_dirs=[
                 Path(this_dir) / "csrc" / "flash_attn",
                 Path(this_dir) / "csrc" / "flash_attn" / "src",
-                Path(this_dir) / "csrc" / "cutlass" / "include",
+                Path(CUTLASS_SRC_DIR) / "include" if CUTLASS_SRC_DIR else Path(this_dir) / "csrc" / "cutlass" / "include",
             ],
         )
     )

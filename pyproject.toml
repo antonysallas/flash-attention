@@ -1,0 +1,27 @@
+[project]
+name = "flash-attention"
+version = "0.1.0"
+description = "Flash Attention: Fast and Memory-Efficient Exact Attention"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "torch",
+    "einops",
+    "packaging",
+    "setuptools",
+    "wheel",
+    "build",
+    "psutil",
+    "ninja",
+]
+
+[build-system]
+requires = [
+    "setuptools",
+    "wheel",
+    "packaging",
+    "psutil",
+    "ninja",
+    "torch",
+]
+build-backend = "setuptools.build_meta"
